@@ -20,6 +20,14 @@ class BaseImage:
         hdu_list = fits.HDUList([hdu_primary, hdu_image])
         hdu_list.writeto(filename)
 
+    def bad_pixel_mask(self):
+        # TODO: Need bad pixel mask
+        pass
+
+    def cosmic_ray_filter(self):
+        # TODO: Need cosmic ray mask
+        pass
+
 
 class ExistingImage(BaseImage):
     def __init__(self, filename: str):

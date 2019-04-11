@@ -26,5 +26,17 @@ class Data(ExistingImage):
         # TODO: look at pysalt to see how they accomplish this
         pass
 
-# TODO: Need bad pixel mask
-# TODO: Need cosmic ray mask
+
+class DataWithExtractionParameters(Data):
+    def __init__(self, filename):
+        super(DataWithExtractionParameters, self).__init__(filename)
+        # point source
+        self.psf_radius = -9999
+        self.aperture_radius = -9999
+        self.background_start = -9999
+        self.background_width = -9999
+        self.background_fit_degree = -9999
+        # extended source
+        self.aperture_radii = []
+        self.background_regions = []
+        self.background_fit_degree = -9999
