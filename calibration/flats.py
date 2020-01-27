@@ -2,11 +2,12 @@ import numpy as np
 from utils.image import BaseImage, ExistingImage, image_overlay
 from skimage import feature
 from skimage.segmentation import flood_fill
+import settings
 
 
 class Flat(ExistingImage):
-    def __init__(self, filename):
-        super(Flat, self).__init__(filename=filename)
+    def __init__(self, filename, fits_image_hdu=settings.FITS_IMAGE_HDU):
+        super(Flat, self).__init__(filename=filename, fits_image_hdu=fits_image_hdu)
         self.flat_scale_multiplier = 1
 
     def scale_flat(self, scale_activated=False):
@@ -27,13 +28,15 @@ class FlatCombined(BaseImage):
         """
         super(FlatCombined, self).__init__()
         self.scaled_flats = [flat.scale_flat(scale_flats) for flat in flats]
-        self.array_and_scale = np.asarray(
-            [np.asarray((flat.image, flat.flat_scale_multiplier)) for flat in self.scaled_flats])
-        self.image = np.sum(self.array_and_scale[:, 0])  # * np.mean(self.array_and_scale[:, 1])
+        # self.array_and_scale = np.asarray(
+        #     [np.asarray((flat.image, flat.flat_scale_multiplier)) for flat in self.scaled_flats])
+        # self.image = np.sum(self.array_and_scale[:, 0]) * np.mean(self.array_and_scale[:, 1])
+        self.image = np.mean(np.asarray([flat.image for flat in flats]), axis=0)
+        print(self.image)
         self.edges = None
         self.orders = orders
         self.sigma = sigma
-        self.locate_orders()
+        # self.locate_orders()
 
     def canny(self):
         self.edges = feature.canny(self.image, sigma=self.sigma)
@@ -60,6 +63,8 @@ class FlatCombined(BaseImage):
         self.canny()
         for order, order_dict in self.orders.items():
             # TODO: Set up multi-threading for this process
+            print(order_dict)
+            print((order_dict['Y'], order_dict['X']))
             order_dict['order_location_array'] = self.fill((order_dict['Y'], order_dict['X']))
             self.orders[order] = order_dict
 
@@ -77,3 +82,9 @@ class FlatCombined(BaseImage):
         for order, order_dict in self.orders.items():
             fill_image += order_dict['order_location_array']
         image_overlay(self.image, fill_image)
+
+    def generate_cold_pixel_mask(self, cutoff_percentile=10):
+        return self.image < np.percentile(self.image, cutoff_percentile)
+
+    def generate_dead_pixel_mask(self, dead_pixel_value=65535):
+        return self.image == dead_pixel_value

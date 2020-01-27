@@ -1,14 +1,11 @@
 from utils.image import ExistingImage
+import numpy as np
 
 
 class Data(ExistingImage):
-    def __init__(self, filename):
-        super(Data, self).__init__(filename)
-
-    def linearity_correction(self):
-        # TODO: find Vicki Toy's non-linearity correction for the H2RG detectors
-        # TODO: find Vicki Toy's data in order to attempt Legendre Polynomial expansion
-        pass
+    def __init__(self, filename, calibration_directory, fits_image_hdu):
+        super(Data, self).__init__(filename, fits_image_hdu)
+        self.calibration_directory = calibration_directory
 
     def subtract_dark_telescope_sky(self, dark_telescope_sky, flat):
         self.image = (self.image-dark_telescope_sky)/flat
@@ -26,10 +23,18 @@ class Data(ExistingImage):
         # TODO: look at pysalt to see how they accomplish this
         pass
 
+    def quick_look_spectrum(self, wavelength_map):
+        wavelengths = np.unique(wavelength_map)
+        print(wavelengths)
+        wavelengths = wavelengths[wavelengths > wavelengths.max()/2]
+        # TODO: fix the resize so that this lazy threshold solution is unnecessary
+        intensities = np.asarray([np.sum(self.image[wavelength_map == wavelength]) for wavelength in wavelengths])
+        return wavelengths, intensities
+
 
 class DataWithExtractionParameters(Data):
-    def __init__(self, filename):
-        super(DataWithExtractionParameters, self).__init__(filename)
+    def __init__(self, filename, calibration_directory):
+        super(DataWithExtractionParameters, self).__init__(filename, calibration_directory)
         # point source
         self.psf_radius = -9999
         self.aperture_radius = -9999
