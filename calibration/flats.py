@@ -32,7 +32,7 @@ class FlatCombined(BaseImage):
         #     [np.asarray((flat.image, flat.flat_scale_multiplier)) for flat in self.scaled_flats])
         # self.image = np.sum(self.array_and_scale[:, 0]) * np.mean(self.array_and_scale[:, 1])
         self.image = np.mean(np.asarray([flat.image for flat in flats]), axis=0)
-        print(self.image)
+        # print(self.image)
         self.edges = None
         self.orders = orders
         self.sigma = sigma
@@ -42,7 +42,7 @@ class FlatCombined(BaseImage):
         self.edges = feature.canny(self.image, sigma=self.sigma)
         # TODO: spline edges
 
-    def fill(self, seed_point):
+    def fill(self, seed_point, fill_value=3):
         y, x = self.edges.shape
         mask = np.zeros((y, x))
         filled_mask = mask.copy()
@@ -56,12 +56,12 @@ class FlatCombined(BaseImage):
             k += 1
             if k == 6:
                 raise ValueError
-        filled_mask[1:y - 1, 0:x - 1] = flood_fill(mask, seed_point, 3)
-        return filled_mask > 2
+        filled_mask[1:y - 1, 0:x - 1] = flood_fill(mask, seed_point, fill_value)
+        return filled_mask[filled_mask > 2]
 
     def locate_orders(self):
         self.canny()
-        for order, order_dict in self.orders.items():
+        for order_dict in self.orders:
             # TODO: Set up multi-threading for this process
             print(order_dict)
             print((order_dict['Y'], order_dict['X']))
