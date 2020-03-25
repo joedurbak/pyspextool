@@ -33,18 +33,6 @@ class BaseImage:
         hdu_list = fits.HDUList([hdu_primary, hdu_image])
         hdu_list.writeto(filename, overwrite=True)
 
-    def bad_pixel_mean_mask(self):
-        # TODO: Need bad pixel mask
-        pass
-
-    def bad_pixel_median_mask(self):
-        # TODO: Need bad pixel mask
-        pass
-
-    def cosmic_ray_filter(self):
-        # TODO: Need cosmic ray mask
-        pass
-
     def histogram(
             self, bin_width='auto', histogram_range=(), x_range=(), y_range=(), show_plot=False, save_plot=False,
             save_filepath="histogram.txt"

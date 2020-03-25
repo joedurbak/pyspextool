@@ -9,7 +9,7 @@ class Data(ExistingImage):
 
     def d_equals_b_minus_a_divided_by_flat(self, a, flat):
         # TODO: only make this happen within the located orders
-        self.image = (self.image-a)/flat
+        self.image = (self.image-a.image)/flat.image
 
     def create_spatial_overlay(self):
         # TODO: Convert code from mc_mkspatprof2d.pro
