@@ -1,13 +1,15 @@
-from utils.image import BaseImage, ExistingImage
-import numpy as np
+from utils.image import CombinedImage
 
 
-class Arc(ExistingImage):
-    def __init__(self, filename):
-        super(Arc, self).__init__(filename)
+class CombinedArc(CombinedImage):
+    def __init__(self, arcs, order_map):
+        super(CombinedArc, self).__init__(arcs)
+        self.order_map = order_map
 
+    def locate_peaks(self):
+        # TODO: make this do something
+        pass
 
-class ArcCombined(BaseImage):
-    def __init__(self, arcs):
-        super(ArcCombined, self).__init__()
-        self.image = np.sum([arc.image for arc in arcs])
+    def wavelength_solution(self):
+        # TODO: make this do something
+        pass

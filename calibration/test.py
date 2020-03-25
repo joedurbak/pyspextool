@@ -1,4 +1,4 @@
-from calibration.flats import FlatCombined, Flat
+from calibration.flats import CombinedFlat, Flat
 from utils.test import test_file_flat, test_file_dir
 from utils.image import ArrayImage
 from settings_default import ORDERS_RIMAS as ORDERS
@@ -14,11 +14,11 @@ class FlatTest:
         self.flat_files_dir = os.path.join(test_file_dir, 'flats', 'HK')
         self.flat_files = os.listdir(self.flat_files_dir)
         self.flats = [Flat(os.path.join(self.flat_files_dir, flat_file)) for flat_file in self.flat_files]
-        self.fcomb = FlatCombined(self.flats, ORDERS)
+        self.fcomb = CombinedFlat(self.flats, ORDERS)
         self.fcomb.power_pixel_scale()
 
     def test_combination(self):
-        return FlatCombined([self.flat1, self.flat2], True).image
+        return CombinedFlat([self.flat1, self.flat2], True).image
 
     def test_canny(self):
         # return Spline(self.test_spline()).canny()

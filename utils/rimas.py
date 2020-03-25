@@ -1,4 +1,5 @@
 from utils.image import ExistingImage, ArrayImage
+# TODO: replace this file with a settings file
 
 
 def hk_model_reshape(

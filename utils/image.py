@@ -155,7 +155,8 @@ class BaseImage:
                 x_left=0, x_right=0, y_top=y_start, y_bottom=y_start+y_size_difference, border_value=border_value
             )
 
-    def scale_and_translate(self, x_translation=0, y_translation=0, x_scale=1, y_scale=1, border_value=0):  # , resample=0):
+    def scale_and_translate(self, x_translation=0, y_translation=0, x_scale=1, y_scale=1, border_value=0):
+        # , resample=0):
         x_size_initial, y_size_initial = self.image.shape
         self.resize(x_scale, y_scale)  # , resample=resample)
         self.crop_and_border(x_size_initial, y_size_initial, border_value=border_value)
@@ -200,10 +201,18 @@ class ArrayImage(BaseImage):
         self.image = array
 
 
-class ImageCombined(BaseImage):
+class ListImage(BaseImage):
     def __init__(self, images):
-        super(ImageCombined, self).__init__()
+        super(ListImage, self).__init__()
         self.images = [image.image for image in images]
+
+    def linearity_check(self):
+        pass
+
+
+class CombinedImage(ListImage):
+    def __init__(self, images):
+        super(CombinedImage, self).__init__(images)
         self.image = np.mean(self.images)
 
 

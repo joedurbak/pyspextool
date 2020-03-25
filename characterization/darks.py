@@ -1,37 +1,34 @@
-from utils.image import ExistingImage, BaseImage
+from utils.image import ListImage
 import numpy as np
-import settings
 import os
+from utils.frames import Dark
 
 
-class Dark(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings.FITS_IMAGE_HDU):
-        super(Dark, self).__init__(filename, fits_image_hdu)
-
-    def generate_hot_pixel_mask(self, cutoff_percentile=90):
-        return self.image > np.percentile(self.image, cutoff_percentile)
-
-
-class DarkCombined(BaseImage):
+class ListDark(ListImage):
     def __init__(self, darks):
         """
         Does all of the order locating and background removal for flats
         :param darks: expecting list of Flat containing Dark.image of the same shape
         :type darks: list
         """
-        super(DarkCombined, self).__init__()
-        self.darks = darks
-        self.image = np.mean(np.asarray([dark.image for dark in darks]), axis=0)
+        super(ListDark, self).__init__(darks)
+        self.hot_pixel_mask = None
+
+    def generate_hot_pixel_mask(self):
+        # TODO: make this do something
+        pass
 
     def generate_nonlinear_pixel_mask(
             self, time_array=None, linearity_error=0.1, image_base_value=0, ascending_counts=True
     ):
+        # TODO: pick a different method for this. this doesn't really work
+        # TODO: consider making this a part of utils.image.ListImage instead
         if ascending_counts:
             image_sign = 1
         else:
             image_sign = -1
 
-        darks_stacked = np.dstack([image_sign * dark.image - image_sign * image_base_value for dark in self.darks])
+        darks_stacked = np.dstack([image_sign * dark.image - image_sign * image_base_value for dark in self.images])
         if np.min(darks_stacked) <= 0:
             raise ValueError("All image values must be greater than zero")
         # darks_stacked = darks_stacked[:, :, 1:] - darks_stacked[:, :, 0]
@@ -62,4 +59,4 @@ def test(dark_dir, hdu=0):
             dark_dir_list_fits.append(os.path.join(dark_dir, file))
     dark_dir_list_fits.sort()
     darks = [Dark(file, hdu) for file in dark_dir_list_fits]
-    return DarkCombined(darks)
+    return ListDark(darks)
