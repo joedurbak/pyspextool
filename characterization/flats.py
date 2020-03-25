@@ -1,4 +1,4 @@
-from utils.image import ListImage
+from pyspextool.utils.image import ListImage
 
 
 class ListFlat(ListImage):

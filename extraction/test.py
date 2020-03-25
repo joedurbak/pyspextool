@@ -1,7 +1,7 @@
 import os
-from extraction.data import Data
+from .data import Data
 import settings
-from utils.image import ExistingImage
+from pyspextool.utils.image import ExistingImage
 from matplotlib import pyplot as plt
 import numpy as np
 

@@ -1,4 +1,4 @@
-from utils.image import ExistingImage, ArrayImage
+from .image import ExistingImage, ArrayImage
 # TODO: replace this file with a settings file
 
 

@@ -1,4 +1,4 @@
-from utils.image import CombinedImage
+from pyspextool.utils.image import CombinedImage
 
 
 class CombinedArc(CombinedImage):

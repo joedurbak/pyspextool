@@ -1,1 +1,1 @@
-from extraction.data import Data
+from .data import Data

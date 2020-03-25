@@ -1,7 +1,7 @@
-from utils.image import ListImage
+from pyspextool.utils.image import ListImage
 import numpy as np
 import os
-from utils.frames import Dark
+from pyspextool.utils.frames import Dark
 
 
 class ListDark(ListImage):

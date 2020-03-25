@@ -5,7 +5,7 @@ import numpy as np
 import os
 from PIL import Image
 from random import randint
-from utils import errors
+from . import errors
 from skimage import filters
 from skimage.morphology import disk
 import cv2

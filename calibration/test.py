@@ -1,7 +1,7 @@
-from calibration.flats import CombinedFlat, Flat
-from utils.test import test_file_flat, test_file_dir
-from utils.image import ArrayImage
-from settings_default import ORDERS_RIMAS as ORDERS
+from .flats import CombinedFlat, Flat
+from pyspextool.utils.test import test_file_flat, test_file_dir
+from pyspextool.utils.image import ArrayImage
+from pyspextool.settings import ORDERS_RIMAS as ORDERS
 import os
 import numpy as np
 # import numpy as np

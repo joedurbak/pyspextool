@@ -1,6 +1,6 @@
 import numpy as np
-from utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage
-from utils.frames import Flat
+from pyspextool.utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage
+from pyspextool.utils.frames import Flat
 from skimage import feature
 from skimage.segmentation import flood_fill
 import settings

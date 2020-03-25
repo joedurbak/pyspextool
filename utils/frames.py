@@ -1,4 +1,4 @@
-from utils.image import ExistingImage
+from pyspextool.utils.image import ExistingImage
 import numpy as np
 import settings
 

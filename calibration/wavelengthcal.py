@@ -1,7 +1,7 @@
 from calibration.arcs import CombinedArc, Arc
 from calibration.flats import CombinedFlat, Flat
 from astroquery.nist import Nist
-from settings import ARCS
+from pyspextool.settings import ARCS
 import astropy.units as u
 
 # TODO: determine whether or not to keep this file

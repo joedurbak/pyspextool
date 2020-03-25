@@ -1,5 +1,5 @@
 import os
-from calibration.flats import CombinedFlat
+from .flats import CombinedFlat
 
 # TODO: make this the main file to interact with the calibration module
 

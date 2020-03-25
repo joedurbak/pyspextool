@@ -1,2 +1,2 @@
-from characterization.darks import ListDark
-from characterization.flats import ListFlat
+from .darks import ListDark
+from .flats import ListFlat
