@@ -1,0 +1,163 @@
+{
+    "base_dir": null,
+    "normalize_flats": false,
+    "fits_image_hdu": 0,
+    "orders": [
+        {
+            "x": 70,
+            "y": 200,
+            "m": 1
+        },
+        {
+            "x": 100,
+            "y": 170,
+            "m": 2
+        },
+        {
+            "x": 100,
+            "y": 130,
+            "m": 3
+        },
+        {
+            "x": 100,
+            "y": 90,
+            "m": 4
+        },
+        {
+            "x": 100,
+            "y": 50,
+            "m": 5
+        },
+        {
+            "x": 175,
+            "y": 25,
+            "m": 6
+        }
+    ],
+    "arcs": [
+        {
+            "element": "Xe",
+            "filename": ""
+        },
+        {
+            "element": "",
+            "filename": ""
+        }
+    ],
+    "orders_rimas": {
+        "order_1": {
+            "x": 930,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_2": {
+            "x": 960,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_3": {
+            "x": 990,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_4": {
+            "x": 1020,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_5": {
+            "x": 1050,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_6": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_7": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_8": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_9": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_10": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_11": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_12": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_13": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_14": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_15": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_16": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_17": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_18": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        },
+        "order_19": {
+            "x": 1080,
+            "y": 1150,
+            "starting_wavelength": 0,
+            "ending_wavelength": 0
+        }
+    }
+}
