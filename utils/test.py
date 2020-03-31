@@ -1,4 +1,4 @@
-from utils.image import ExistingImage, image_overlay, ArrayImage
+from .image import ExistingImage, image_overlay, ArrayImage
 import os
 import settings
 import numpy as np

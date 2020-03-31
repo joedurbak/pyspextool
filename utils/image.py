@@ -5,7 +5,7 @@ import numpy as np
 import os
 from PIL import Image
 from random import randint
-from utils import errors
+from . import errors
 from skimage import filters
 from skimage.morphology import disk
 import cv2
@@ -295,10 +295,18 @@ class ArrayImage(BaseImage):
         self.image = array
 
 
-class ImageCombined(BaseImage):
+class ListImage(BaseImage):
     def __init__(self, images):
-        super(ImageCombined, self).__init__()
+        super(ListImage, self).__init__()
         self.images = [image.image for image in images]
+
+    def linearity_check(self):
+        pass
+
+
+class CombinedImage(ListImage):
+    def __init__(self, images):
+        super(CombinedImage, self).__init__(images)
         self.image = np.mean(self.images)
 
 

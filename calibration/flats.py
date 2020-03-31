@@ -1,23 +1,12 @@
 import numpy as np
-from utils.image import BaseImage, ExistingImage, ArrayImage, image_overlay
+from pyspextool.utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage
+from pyspextool.utils.frames import Flat
 from skimage import feature
 from skimage.segmentation import flood_fill
 import settings
 
 
-class Flat(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings.FITS_IMAGE_HDU):
-        super(Flat, self).__init__(filename=filename, fits_image_hdu=fits_image_hdu)
-        self.flat_scale_multiplier = 1
-
-    def scale_flat(self, scale_activated=False):
-        if scale_activated:
-            self.flat_scale_multiplier = np.mean(self.image)
-            self.image = self.image / self.flat_scale_multiplier
-        return self
-
-
-class FlatCombined(BaseImage):
+class CombinedFlat(CombinedImage):
     def __init__(self, flats, orders, scale_flats=False, sigma=5):
         """
         Does all of the order locating and background removal for flats
@@ -26,12 +15,12 @@ class FlatCombined(BaseImage):
         :param scale_flats: determines whether all flats are normalized or added as is, increases comp time
         :type scale_flats: bool
         """
-        super(FlatCombined, self).__init__()
+        super(CombinedFlat, self).__init__(flats)
         self.scaled_flats = [flat.scale_flat(scale_flats) for flat in flats]
         # self.array_and_scale = np.asarray(
         #     [np.asarray((flat.image, flat.flat_scale_multiplier)) for flat in self.scaled_flats])
         # self.image = np.sum(self.array_and_scale[:, 0]) * np.mean(self.array_and_scale[:, 1])
-        self.image = np.mean(np.asarray([flat.image for flat in flats]), axis=0)
+        # self.image = np.mean(np.asarray([flat.image for flat in flats]), axis=0)
         # print(self.image)
         self.edges = None
         self.orders = orders
@@ -101,8 +90,8 @@ class FlatCombined(BaseImage):
             fill_image += order_dict['order_location_array']
         image_overlay(self.image, fill_image)
 
-    def generate_cold_pixel_mask(self, cutoff_percentile=10):
-        return self.image < np.percentile(self.image, cutoff_percentile)
-
+    # def generate_cold_pixel_mask(self, cutoff_percentile=10):
+    #     return self.image < np.percentile(self.image, cutoff_percentile)
+    #
     def generate_dead_pixel_mask(self, dead_pixel_value=65535):
         return self.image == dead_pixel_value
