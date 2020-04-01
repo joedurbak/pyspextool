@@ -10,14 +10,14 @@ if CURRENT_PYTHON < REQUIRED_PYTHON:
 ==========================
 Unsupported Python version
 ==========================
-This version of pyspextool requires Python {}.{}, but you're trying to
+This version of xspectre requires Python {}.{}, but you're trying to
 install it on Python {}.{}.
 This may be because you are using a version of pip that doesn't
 understand the python_requires classifier. Make sure you
 have pip >= 9.0 and setuptools >= 24.2, then try again:
     $ python -m pip install --upgrade pip setuptools
-    $ python -m pip install pyspextool
-This will install the latest version of pyspextool which works on your
+    $ python -m pip install xspectre
+This will install the latest version of xspecte which works on your
 version of Python.
 """.format(*sys_error_args))
     sys.exit(1)
@@ -25,7 +25,7 @@ version of Python.
 EXCLUDE_FROM_PACKAGES = []
 
 setup(
-    name='pyspextool',
+    name='xspectre',
     version='0.0.1',
     python_requires='>={}.{}'.format(*REQUIRED_PYTHON),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
@@ -33,7 +33,7 @@ setup(
     license='MIT License',
     author='Joe Durbak',
     author_email='durbak.3@gmail.com',
-    description='Cross-Dispersed Spectra Data Reduction',
+    description='Cross-Dispersed Spectra Reduction',
     scripts=[],
     include_package_data=True,
 )
