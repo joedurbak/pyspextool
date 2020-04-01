@@ -1,1 +1,1 @@
-from .data import Data
+from pyspextool.extraction.data import Data

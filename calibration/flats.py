@@ -1,9 +1,9 @@
 import numpy as np
-from pyspextool.utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage
+from pyspextool.utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage, ArrayImage
 from pyspextool.utils.frames import Flat
 from skimage import feature
 from skimage.segmentation import flood_fill
-import settings
+from pyspextool import settings
 
 
 class CombinedFlat(CombinedImage):

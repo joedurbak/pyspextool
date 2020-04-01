@@ -1,4 +1,4 @@
-from .image import ExistingImage, ArrayImage
+from pyspextool.utils.image import ExistingImage, ArrayImage
 # TODO: replace this file with a settings file
 
 

@@ -1,2 +1,2 @@
-from .darks import ListDark
-from .flats import ListFlat
+from pyspextool.characterization.darks import ListDark
+from pyspextool.characterization.flats import ListFlat

@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 from astropy.io import fits
-import settings
+from pyspextool import settings
 import numpy as np
 import os
 from PIL import Image
@@ -20,6 +20,7 @@ class BaseImage:
     """
     def __init__(self):
         self.image = None
+        self.image_hdu = 0
         self.header = fits.Header()
 
     def show(self):
@@ -33,21 +34,29 @@ class BaseImage:
         plt.xticks([]), plt.yticks([])
         plt.show()
 
-    def save(self, filename):
+    def save(self, filename, hdu=None):
         """
         saves image and header to fits file
         :param filename: file path to save to
         :type filename: str
+        :param hdu: image hdu number
+        :type hdu: int
         :return:
         :rtype:
         """
         # TODO: fix header saving issue
         file_dir = os.path.dirname(filename)
+        if hdu is None:
+            hdu = self.image_hdu
         if not os.path.exists(file_dir):
             os.makedirs(file_dir)
         hdu_primary = fits.PrimaryHDU(header=self.header)
-        hdu_image = fits.ImageHDU(self.image)
-        hdu_list = fits.HDUList([hdu_primary, hdu_image])
+        if hdu == 0:
+            hdu_primary.data = self.image
+            hdu_list = fits.HDUList([hdu_primary])
+        else:
+            hdu_image = fits.ImageHDU(self.image)
+            hdu_list = fits.HDUList([hdu_primary, hdu_image])
         hdu_list.writeto(filename, overwrite=True)
 
     def histogram(
@@ -275,9 +284,10 @@ class BaseImage:
 class ExistingImage(BaseImage):
     def __init__(self, filename: str, fits_image_hdu=settings.FITS_IMAGE_HDU):
         super(ExistingImage, self).__init__()
+        self.image_hdu = fits_image_hdu
         self.filename = filename
         self.hdu_list = fits.open(filename)
-        self.image = self.hdu_list[fits_image_hdu].data
+        self.image = self.hdu_list[self.image_hdu].data
         if self.image is None:
             raise errors.EmptyImageError("Selected image HDU contains no array")
         self.header = self.hdu_list[0].header

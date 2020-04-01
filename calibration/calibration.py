@@ -1,6 +1,6 @@
 import os
-from calibration.flats import FlatCombined, Flat
-import settings
+from pyspextool.calibration.flats import CombinedFlat, Flat
+from pyspextool import settings
 
 
 class CalibrationPacket:
@@ -8,4 +8,4 @@ class CalibrationPacket:
         if flat_dir is not None:
             if orders is None:
                 orders = settings.ORDERS
-            flat = FlatCombined([Flat(os.path.join(flat_dir, file)) for file in os.listdir(flat_dir)], orders)
+            flat = CombinedFlat([Flat(os.path.join(flat_dir, file)) for file in os.listdir(flat_dir)], orders)
