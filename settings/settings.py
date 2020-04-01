@@ -3,7 +3,8 @@ import json
 
 def load_default():
     '''Load the default settings'''
-    fn = 'settings_default.json'
+    local_dirname = os.path.dirname(os.path.abspath(__file__))
+    fn = os.path.join(local_dirname, 'settings_default.json')
     with open(fn) as fp:
         data = json.load(fp)
 
@@ -89,7 +90,8 @@ class Settings():
     def load_txt(self, fn):
         pass
 
-settings = Settings()
+settings_default = Settings()
+
 """
 
 settings = load_default()
