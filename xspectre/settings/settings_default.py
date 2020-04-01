@@ -104,100 +104,73 @@ ARCS = [
     }
 ]
 
-ORDERS_RIMAS = {
-    'ORDER_1': {
-        'X': 930, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+ORDERS_HK = [
+    {
+        'X': 935, 'Y': 1150,  # rough center of order
+        'M': 39,
     },
-    'ORDER_2': {
+    {
         'X': 960, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+        'M': 38,
     },
-    'ORDER_3': {
+    {
         'X': 990, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+        'M': 37,
     },
-    'ORDER_4': {
+    {
         'X': 1020, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+        'M': 36,
     },
-    'ORDER_5': {
-        'X': 1050, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1060, 'Y': 1150,  # rough center of order
+        'M': 35,
     },
-    'ORDER_6': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1090, 'Y': 1150,  # rough center of order
+        'M': 34,
     },
-    'ORDER_7': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1130, 'Y': 1150,  # rough center of order
+        'M': 33,
     },
-    'ORDER_8': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1170, 'Y': 1150,  # rough center of order
+        'M': 32,
     },
-    'ORDER_9': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1210, 'Y': 1150,  # rough center of order
+        'M': 31,
     },
-    'ORDER_10': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1250, 'Y': 1150,  # rough center of order
+        'M': 30,
     },
-    'ORDER_11': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1300, 'Y': 1150,  # rough center of order
+        'M': 29,
     },
-    'ORDER_12': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1350, 'Y': 1150,  # rough center of order
+        'M': 28,
     },
-    'ORDER_13': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1400, 'Y': 1150,  # rough center of order
+        'M': 27,
     },
-    'ORDER_14': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1460, 'Y': 1150,  # rough center of order
+        'M': 26,
     },
-    'ORDER_15': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1520, 'Y': 1150,  # rough center of order
+        'M': 25,
     },
-    'ORDER_16': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1590, 'Y': 1150,  # rough center of order
+        'M': 24,
     },
-    'ORDER_17': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
+    {
+        'X': 1660, 'Y': 1150,  # rough center of order
+        'M': 23,
     },
-    'ORDER_18': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
-    },
-    'ORDER_19': {
-        'X': 1080, 'Y': 1150,  # rough center of order
-        'STARTING_WAVELENGTH': 0,
-        'ENDING_WAVELENGTH': 0,
-    },
-}
+]

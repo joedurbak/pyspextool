@@ -50,7 +50,9 @@ class BaseImage:
             hdu = self.image_hdu
         if not os.path.exists(file_dir):
             os.makedirs(file_dir)
-        hdu_primary = fits.PrimaryHDU(header=self.header)
+        # print(self.header)
+        # hdu_primary = fits.PrimaryHDU(header=self.header)
+        hdu_primary = fits.PrimaryHDU()
         if hdu == 0:
             hdu_primary.data = self.image
             hdu_list = fits.HDUList([hdu_primary])
@@ -308,7 +310,7 @@ class ArrayImage(BaseImage):
 class ListImage(BaseImage):
     def __init__(self, images):
         super(ListImage, self).__init__()
-        self.images = [image.image for image in images]
+        self.images = np.asarray([image.image for image in images])
 
     def linearity_check(self):
         pass
@@ -317,7 +319,7 @@ class ListImage(BaseImage):
 class CombinedImage(ListImage):
     def __init__(self, images):
         super(CombinedImage, self).__init__(images)
-        self.image = np.mean(self.images)
+        self.image = np.mean(self.images, axis=0)
 
 
 def image_overlay(background_image, foreground_image, background_cmap='Greys'):

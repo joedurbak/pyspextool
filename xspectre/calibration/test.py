@@ -1,7 +1,8 @@
-from xspectre.calibration.flats import CombinedFlat, Flat
+from xspectre.calibration.flats import CombinedFlat
+from xspectre.utils.frames import Flat
 from xspectre import test
 from xspectre.utils.image import ArrayImage
-from xspectre.settings import ORDERS_RIMAS as ORDERS
+from xspectre.settings import ORDERS_HK as ORDERS
 import os
 import numpy as np
 # import numpy as np
@@ -11,7 +12,7 @@ class FlatTest:
     def __init__(self, test_filenames):
         self.flats = [Flat(flat_file) for flat_file in test_filenames]
         self.fcomb = CombinedFlat(self.flats, ORDERS)
-        self.fcomb.power_pixel_scale()
+        # self.fcomb.power_pixel_scale()
 
     def test_combination(self):
         return CombinedFlat(self.flats, True).image
@@ -32,7 +33,7 @@ class FlatTest:
 
 fill_seed = ORDERS[10]
 fill_seed = (fill_seed['Y'], fill_seed['X'])
-flat_test = FlatTest(test.hk_flats[0])
+flat_test = FlatTest(test.hk_flats_input)
 flat_test.fcomb.show()
 flat_test.fcomb.image = flat_test.fcomb.image.astype(np.int32)
 flat_test.fcomb.save(os.path.join(test.characterization_output_dir, 'flats_combined.fits'))
