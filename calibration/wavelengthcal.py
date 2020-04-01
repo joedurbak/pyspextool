@@ -1,5 +1,5 @@
-from calibration.arcs import CombinedArc, Arc
-from calibration.flats import CombinedFlat, Flat
+from pyspextool.calibration.arcs import CombinedArc
+from pyspextool.calibration.flats import CombinedFlat, Flat
 from astroquery.nist import Nist
 from pyspextool.settings import ARCS
 import astropy.units as u

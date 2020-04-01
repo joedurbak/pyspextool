@@ -1,9 +1,9 @@
 import numpy as np
-from pyspextool.utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage
+from pyspextool.utils.image import BaseImage, ExistingImage, image_overlay, CombinedImage, ArrayImage
 from pyspextool.utils.frames import Flat
 from skimage import feature
 from skimage.segmentation import flood_fill
-import settings
+from pyspextool import settings
 
 
 class CombinedFlat(CombinedImage):
@@ -27,11 +27,22 @@ class CombinedFlat(CombinedImage):
         self.sigma = sigma
         # self.locate_orders()
 
-    def canny(self):
-        self.edges = feature.canny(self.image, sigma=self.sigma)
-        # TODO: spline edges
+    def canny(self, manipulate_min=None, manipulate_max=None, mean_filter_disk_radius=None):
+        canny_image = ArrayImage(self.image)
+        if mean_filter_disk_radius is not None:
+            canny_image.mean_filter(mean_filter_disk_radius)
+        if manipulate_max is None:
+            manipulate_max = canny_image.image.max()
+        if manipulate_min is None:
+            manipulate_min = canny_image.image.min()
+        canny_image.min_max_intensity_manipulate(manipulate_min, manipulate_max)
+        self.edges = feature.canny(
+            canny_image.image, sigma=self.sigma,  # low_threshold=manipulate_min, high_threshold=manipulate_max,
+        )
+        # TODO: find a way to extract and fit a function to contours
 
     def fill(self, seed_point, fill_value=3):
+        # TODO: replace this with something that doesn't risk flooding entire image
         y, x = self.edges.shape
         mask = np.zeros((y, x))
         filled_mask = mask.copy()
@@ -48,14 +59,21 @@ class CombinedFlat(CombinedImage):
         filled_mask[1:y - 1, 0:x - 1] = flood_fill(mask, seed_point, fill_value)
         return filled_mask[filled_mask > 2]
 
-    def locate_orders(self):
-        self.canny()
+    def locate_orders(self, canny_image_min=None, canny_image_max=None):
+        self.canny(canny_image_min, canny_image_max)
+        order_map = np.zeros(self.image.shape).astype(np.int)
         for order_dict in self.orders:
             # TODO: Set up multi-threading for this process
-            print(order_dict)
-            print((order_dict['Y'], order_dict['X']))
-            order_dict['order_location_array'] = self.fill((order_dict['Y'], order_dict['X']))
-            self.orders[order] = order_dict
+            # print(order_dict)
+            # print((order_dict['Y'], order_dict['X']))
+            order = self.fill((order_dict['Y'], order_dict['X']))
+            print("order after fill shape: {}".format(order.shape))
+            order = order.astype(np.int)
+            print("order after type change shape: {}".format(order.shape))
+            order = order * order_dict['M']
+            print("order after multiplication shape: {}".format(order.shape))
+            order_map += order
+        return order_map
 
     def normalized_flat(self):
         return self.image / np.max(self.image)
@@ -74,6 +92,6 @@ class CombinedFlat(CombinedImage):
 
     # def generate_cold_pixel_mask(self, cutoff_percentile=10):
     #     return self.image < np.percentile(self.image, cutoff_percentile)
-    # 
+    #
     def generate_dead_pixel_mask(self, dead_pixel_value=65535):
         return self.image == dead_pixel_value
