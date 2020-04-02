@@ -1,6 +1,6 @@
-from xspectre.utils.image import ExistingImage  # , image_overlay, ArrayImage
 import os
 from xspectre import test
+from xspectre.utils.image import ExistingImage  # , image_overlay, ArrayImage
 
 # create image object
 test_image = ExistingImage(test.yj_flats_input[0], 0)

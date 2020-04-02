@@ -1,9 +1,9 @@
 import os
-from xspectre.extraction.data import Data
-from xspectre.utils.image import ExistingImage
-from xspectre import test
 from matplotlib import pyplot as plt
 import numpy as np
+from xspectre import test
+from xspectre.utils.image import ExistingImage
+from xspectre.extraction.data import Data
 
 csv_file = os.path.join(test.extraction_output_dir, test.hk_arcs['Xe'].replace('.fits', '.csv'))
 test_file = test.hk_arcs_input['Xe']

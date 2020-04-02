@@ -1,10 +1,10 @@
-from xspectre.calibration.flats import CombinedFlat
-from xspectre.utils.frames import Flat
-from xspectre import test
-from xspectre.utils.image import ArrayImage
-from xspectre.settings import ORDERS_HK as ORDERS
 import os
 import numpy as np
+from xspectre.settings import ORDERS_HK as ORDERS
+from xspectre import test
+from xspectre.utils.image import ArrayImage
+from xspectre.utils.frames import Flat
+from xspectre.calibration.flats import CombinedFlat
 # import numpy as np
 
 

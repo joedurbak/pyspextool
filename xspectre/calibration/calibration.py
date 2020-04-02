@@ -1,6 +1,7 @@
 import os
-from xspectre.calibration.flats import CombinedFlat, Flat
 from xspectre import settings
+from xspectre.utils.frames import Flat
+from xspectre.calibration.flats import CombinedFlat
 
 
 class CalibrationPacket:

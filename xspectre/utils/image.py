@@ -1,17 +1,17 @@
-from matplotlib import pyplot as plt
-from astropy.io import fits
-from xspectre import settings
-import numpy as np
+from collections.abc import Iterable
 import os
-from PIL import Image
-from random import randint
-from xspectre.utils import errors
-from skimage import filters
-from skimage.morphology import disk
+from astropy.io import fits
 import cv2
 from lacosmic import lacosmic
+from matplotlib import pyplot as plt
+import numpy as np
+from PIL import Image
+from random import randint
 from scipy import interpolate
-from collections.abc import Iterable
+from skimage import filters
+from skimage.morphology import disk
+from xspectre import settings
+from xspectre.utils import errors
 
 
 class BaseImage:
@@ -26,8 +26,6 @@ class BaseImage:
     def show(self):
         """
         Displays the current image using pyplot
-        :return:
-        :rtype:
         """
         plt.figure(randint(0, 256))
         plt.imshow(self.image,)
@@ -37,12 +35,17 @@ class BaseImage:
     def save(self, filename, hdu=None):
         """
         saves image and header to fits file
-        :param filename: file path to save to
-        :type filename: str
-        :param hdu: image hdu number
-        :type hdu: int
-        :return:
-        :rtype:
+
+        Parameters
+        ----------
+        filename : str
+            file path to save to
+        hdu : int
+            image hdu number
+
+        Returns
+        -------
+
         """
         # TODO: fix header saving issue
         file_dir = os.path.dirname(filename)
@@ -67,22 +70,21 @@ class BaseImage:
     ):
         """
         creates intensity histogram of the image
-        :param bin_width: width of histogram bins
-        :type bin_width: int or sequence or str, optional
-        :param histogram_range:
-        :type histogram_range:
-        :param x_range:
-        :type x_range:
-        :param y_range:
-        :type y_range:
-        :param show_plot: determines if you want the histogram plot to show
-        :type show_plot: bool
-        :param save_plot:
-        :type save_plot:
-        :param save_filepath:
-        :type save_filepath:
-        :return:
-        :rtype:
+
+        Parameters
+        ----------
+        bin_width : int or sequence or str, optional
+            width of histogram bins
+        histogram_range :
+        x_range :
+        y_range :
+        show_plot :
+        save_plot :
+        save_filepath :
+
+        Returns
+        -------
+
         """
         if histogram_range == ():
             histogram_range = (self.image.min(), self.image.max())
@@ -106,6 +108,18 @@ class BaseImage:
         return histogram
 
     def masked_interpolation(self, bad_pixel_mask, method='cubic'):
+        """
+        Interpolates over masked locations
+
+        Parameters
+        ----------
+        bad_pixel_mask : np.array
+        method : str
+
+        Returns
+        -------
+
+        """
         bad_pixel_mask = bad_pixel_mask > 0
         x = np.arange(0, self.image.shape[1])
         y = np.arange(0, self.image.shape[0])
@@ -122,10 +136,14 @@ class BaseImage:
     def median_filter(self, disk_radius=2):
         """
         Replaces pixel value with median of neighborhood
-        :param disk_radius: radius needed for median
-        :type disk_radius: int
-        :return: alters self.image
-        :rtype: None
+
+        Parameters
+        ----------
+        disk_radius : int
+
+        Returns
+        -------
+        alters self.image
         """
         # TODO: figure out why this isn't working, consider using astropy.convolution instead
         self.image = filters.median(self.image, selem=disk(disk_radius))
@@ -133,10 +151,14 @@ class BaseImage:
     def mean_filter(self, disk_radius=2):
         """
         Replaces pixel value with mean of neighborhood
-        :param disk_radius: radius needed for mean
-        :type disk_radius: int
-        :return: alters self.image
-        :rtype: None
+
+        Parameters
+        ----------
+        disk_radius : int
+
+        Returns
+        -------
+        alters self.image
         """
         # TODO: figure out why this isn't working, consider using astropy.convolution instead
         self.image = filters.rank.mean(self.image, selem=disk(disk_radius))
@@ -147,28 +169,23 @@ class BaseImage:
             ):
         """
         Cleans cosmic rays from image using lacosmic algorithm
-        :param contrast:
-        :type contrast:
-        :param cr_threshold:
-        :type cr_threshold:
-        :param neighbor_threshold:
-        :type neighbor_threshold:
-        :param error:
-        :type error:
-        :param mask:
-        :type mask:
-        :param background:
-        :type background:
-        :param effective_gain:
-        :type effective_gain:
-        :param readnoise:
-        :type readnoise:
-        :param maxiter:
-        :type maxiter:
-        :param border_mode:
-        :type border_mode:
-        :return:
-        :rtype:
+
+        Parameters
+        ----------
+        contrast :
+        cr_threshold :
+        neighbor_threshold :
+        error :
+        mask :
+        background :
+        effective_gain :
+        readnoise :
+        maxiter :
+        border_mode :
+
+        Returns
+        -------
+
         """
         # TODO: figure out which parameters work best for this. Ask JWST folks, Dale or Bernie, what they used for this
         self.image = lacosmic(
@@ -180,12 +197,17 @@ class BaseImage:
     def slice(self, x_range=(), y_range=()):
         """
         Selects part of the image
-        :param x_range: min and max for slice
-        :type x_range: Iterable
-        :param y_range: min and max for slice
-        :type y_range: Iterable
-        :return:
-        :rtype:
+
+        Parameters
+        ----------
+        x_range : Iterable
+            min and max for slice
+        y_range : Iterable
+            min and max for slice
+
+        Returns
+        -------
+
         """
         # TODO: determine if we actually want it to replace the image, or return another array
         y_max, x_max = self.image.shape
@@ -198,18 +220,23 @@ class BaseImage:
     def border(self, x_left=0, x_right=0, y_top=0, y_bottom=0, border_value=0):
         """
         adds a border around image
-        :param x_left: adds border before 0th index along axis=1
-        :type x_left: int
-        :param x_right: adds border after maximum index along axis=1
-        :type x_right: int
-        :param y_top: adds border after maximum index along axis=0
-        :type y_top: int
-        :param y_bottom: adds border before 0th index along axis=0
-        :type y_bottom: int
-        :param border_value: pixel value of added border
-        :type border_value: int
-        :return:
-        :rtype: None
+
+        Parameters
+        ----------
+        x_left : int
+            adds border before 0th index along axis=1
+        x_right : int
+            adds border after maximum index along axis=1
+        y_top : int
+            adds border after maximum index along axis=0
+        y_bottom : int
+            adds border before 0th index along axis=0
+        border_value : int or float
+            pixel value of added border
+
+        Returns
+        -------
+
         """
         y_max, x_max = self.image.shape
         border_array = np.zeros((y_top+y_max+y_bottom, x_left+x_max+x_right)) + border_value
@@ -269,6 +296,17 @@ class BaseImage:
         self.image = (a**x-1)/a
 
     def rotate(self, angle_degrees):
+        """
+        rotates the image by angle specified
+
+        Parameters
+        ----------
+        angle_degrees : int or float
+
+        Returns
+        -------
+
+        """
         image_center = tuple(np.array(self.image.shape[1::-1]) / 2)
         rot_mat = cv2.getRotationMatrix2D(image_center, angle_degrees, 1.0)
         result = cv2.warpAffine(self.image, rot_mat, self.image.shape[1::-1], flags=cv2.INTER_NEAREST)
@@ -325,14 +363,16 @@ class CombinedImage(ListImage):
 def image_overlay(background_image, foreground_image, background_cmap='Greys'):
     """
     Plots foreground over background image
-    :param background_image: background image
-    :type background_image: np.array
-    :param foreground_image: foreground image
-    :type foreground_image: np.array
-    :param background_cmap: color map for background
-    :type background_cmap: string
-    :return:
-    :rtype:
+
+    Parameters
+    ----------
+    background_image : np.array
+    foreground_image : np.array
+    background_cmap : string
+
+    Returns
+    -------
+
     """
     plt.figure()
     plt.imshow(background_image, interpolation='nearest', cmap=background_cmap)

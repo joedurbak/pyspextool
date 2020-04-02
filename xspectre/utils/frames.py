@@ -1,6 +1,6 @@
-from xspectre.utils.image import ExistingImage
 import numpy as np
 from xspectre import settings
+from xspectre.utils.image import ExistingImage
 
 
 class Dark(ExistingImage):
