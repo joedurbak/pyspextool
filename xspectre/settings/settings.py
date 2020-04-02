@@ -94,7 +94,7 @@ settings_default = Settings()
 
 """
 
-settings = load_default()
+settings_default = load_default()
 
 if __name__ == '__main__':
     #print("settings:", settings.BASE_DIR)

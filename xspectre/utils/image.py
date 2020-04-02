@@ -1,17 +1,19 @@
-from matplotlib import pyplot as plt
-from astropy.io import fits
-from xspectre import settings
-import numpy as np
+from collections.abc import Iterable
 import os
-from PIL import Image
 from random import randint
-from xspectre.utils import errors
-from skimage import filters
-from skimage.morphology import disk
+
+from astropy.io import fits
 import cv2
 from lacosmic import lacosmic
+from matplotlib import pyplot as plt
+import numpy as np
+from PIL import Image
 from scipy import interpolate
-from collections.abc import Iterable
+from skimage import filters
+from skimage.morphology import disk
+
+from xspectre.settings.settings import settings_default
+from xspectre.utils import errors
 
 
 class BaseImage:
@@ -284,7 +286,7 @@ class BaseImage:
 
 
 class ExistingImage(BaseImage):
-    def __init__(self, filename: str, fits_image_hdu=settings.FITS_IMAGE_HDU):
+    def __init__(self, filename: str, fits_image_hdu=settings_default['fits_image_hdu']):
         super(ExistingImage, self).__init__()
         self.image_hdu = fits_image_hdu
         self.filename = filename
