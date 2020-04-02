@@ -1,7 +1,6 @@
 import numpy as np
 from skimage import feature
 from skimage.segmentation import flood_fill
-from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
 
 from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
 

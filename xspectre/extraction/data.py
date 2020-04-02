@@ -1,5 +1,4 @@
 import numpy as np
-from xspectre.utils.image import ExistingImage
 
 from xspectre.utils.image import ExistingImage
 
