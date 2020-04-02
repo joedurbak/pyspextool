@@ -1,6 +1,6 @@
+import astropy.units as u
 from astroquery.nist import Nist
 from xspectre.settings import ARCS
-import astropy.units as u
 
 # TODO: determine whether or not to keep this file
 

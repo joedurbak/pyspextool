@@ -1,17 +1,24 @@
 import numpy as np
 from skimage import feature
 from skimage.segmentation import flood_fill
+from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
 
 from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
 
 class CombinedFlat(CombinedImage):
     def __init__(self, flats, orders, scale_flats=False, sigma=5):
         """
-        Does all of the order locating and background removal for flats
-        :param flats: expecting list of Flat containing Flat.image of the same shape
-        :type flats: list
-        :param scale_flats: determines whether all flats are normalized or added as is, increases comp time
-        :type scale_flats: bool
+
+        Parameters
+        ----------
+        flats : list
+            expecting list of Flat containing Flat.image of the same shape
+        orders : list
+            list of dictionaries containing keys 'X', 'Y', and 'M'
+        scale_flats : bool
+            determines whether all flats are normalized or added as is, increases comp time
+        sigma : int or float
+            deviation used in the edge finder
         """
         super(CombinedFlat, self).__init__(flats)
         self.scaled_flats = [flat.scale_flat(scale_flats) for flat in flats]

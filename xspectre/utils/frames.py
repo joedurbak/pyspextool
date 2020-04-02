@@ -3,7 +3,6 @@ import numpy as np
 from xspectre.utils.image import ExistingImage
 from xspectre.settings.settings import settings_default
 
-
 class Dark(ExistingImage):
     def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
         super(Dark, self).__init__(filename, fits_image_hdu)

@@ -1,6 +1,6 @@
-from xspectre.utils.image import ListImage
-import numpy as np
 import os
+import numpy as np
+from xspectre.utils.image import ListImage
 from xspectre.utils.frames import Dark
 
 
@@ -8,8 +8,11 @@ class ListDark(ListImage):
     def __init__(self, darks):
         """
         Does all of the order locating and background removal for flats
-        :param darks: expecting list of Flat containing Dark.image of the same shape
-        :type darks: list
+
+        Parameters
+        ----------
+        darks : list
+            list of Dark image objects
         """
         super(ListDark, self).__init__(darks)
         self.hot_pixel_mask = None
