@@ -1,8 +1,8 @@
 import numpy as np
 from skimage import feature
 from skimage.segmentation import flood_fill
-from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
 
+from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
 
 class CombinedFlat(CombinedImage):
     def __init__(self, flats, orders, scale_flats=False, sigma=5):

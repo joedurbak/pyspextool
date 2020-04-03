@@ -1,7 +1,8 @@
 import os
-from xspectre import settings
 
-test_file_dir = os.path.join(settings.BASE_DIR, 'test', )
+from xspectre.settings.settings import settings_default
+
+test_file_dir = os.path.join(settings_default['base_dir'], 'test', )
 output_dir = os.path.join(test_file_dir, 'output')
 calibration_output_dir = os.path.join(output_dir, 'calibration')
 characterization_output_dir = os.path.join(output_dir, 'characterization')

@@ -1,10 +1,10 @@
 import numpy as np
-from xspectre import settings
-from xspectre.utils.image import ExistingImage
 
+from xspectre.utils.image import ExistingImage
+from xspectre.settings.settings import settings_default
 
 class Dark(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings.FITS_IMAGE_HDU):
+    def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
         super(Dark, self).__init__(filename, fits_image_hdu)
 
     def generate_hot_pixel_mask(self, cutoff_percentile=90):
@@ -12,7 +12,7 @@ class Dark(ExistingImage):
 
 
 class Flat(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings.FITS_IMAGE_HDU):
+    def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
         super(Flat, self).__init__(filename=filename, fits_image_hdu=fits_image_hdu)
         self.flat_scale_multiplier = 1
 
