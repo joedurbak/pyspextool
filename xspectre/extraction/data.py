@@ -2,6 +2,7 @@ import numpy as np
 
 from xspectre.utils.image import ExistingImage
 
+
 class Data(ExistingImage):
     def __init__(self, filename, calibration_directory, fits_image_hdu):
         super(Data, self).__init__(filename, fits_image_hdu)

@@ -10,6 +10,7 @@ from xspectre.settings.settings import settings_default
 
 ORDERS = settings_default['orders_hk']
 
+
 class FlatTest:
     def __init__(self, test_filenames):
         self.flats = [Flat(flat_file) for flat_file in test_filenames]
@@ -31,6 +32,7 @@ class FlatTest:
 
     def test_locate(self):
         return self.fcomb.locate_orders()
+
 
 if __name__ == '__main__':
     fill_seed = ORDERS[10]

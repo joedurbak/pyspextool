@@ -1,5 +1,7 @@
 import os
+
 import numpy as np
+
 from xspectre.utils.image import ListImage
 from xspectre.utils.frames import Dark
 

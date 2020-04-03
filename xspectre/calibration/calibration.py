@@ -1,4 +1,5 @@
 import os
+
 from xspectre import settings
 from xspectre.utils.frames import Flat
 from xspectre.calibration.flats import CombinedFlat
