@@ -20,6 +20,6 @@ bad_pixel_darks = list_dark.bad_pixel_array()
 bad_pixel_darks_image = list_dark.bad_pixel_image()
 bad_pixel_flats_image.save(os.path.join(characterization_output_dir, 'bad_pixel_dark_map.fits'), hdu=0)
 
-bad_pixel_map = np.logical_and(bad_pixel_flats, bad_pixel_darks)
+bad_pixel_map = np.logical_or(bad_pixel_flats, bad_pixel_darks)
 bad_pixel_map_image = ArrayImage(bad_pixel_map.astype(np.int16))
 bad_pixel_map_image.save(os.path.join(characterization_output_dir, 'bad_pixel_map.fits'), hdu=0)
