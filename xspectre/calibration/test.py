@@ -40,7 +40,7 @@ if __name__ == '__main__':
     flat_test = FlatTest(test.hk_flats_input)
     flat_test.fcomb.show()
     flat_test.fcomb.image = flat_test.fcomb.image.astype(np.int32)
-    flat_test.fcomb.save(os.path.join(test.characterization_output_dir, 'flats_combined.fits'))
+    flat_test.fcomb.save(os.path.join(test.calibration_output_dir, 'flats_combined.fits'))
     flat_test.fcomb.canny()
     ArrayImage(flat_test.fcomb.edges).show()
     # ArrayImage(test.test_fill(fill_seed)).show()

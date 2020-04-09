@@ -55,7 +55,7 @@ class BaseImage:
             hdu = self.image_hdu
         if not os.path.exists(file_dir):
             os.makedirs(file_dir)
-        # print(self.header)
+        print(self.header)
         # hdu_primary = fits.PrimaryHDU(header=self.header)
         hdu_primary = fits.PrimaryHDU()
         if hdu == 0:

@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 
-from xspectre.utils.image import ListImage
+from xspectre.utils.image import ListImage, ArrayImage
 from xspectre.utils.frames import Dark
 
 
@@ -54,6 +54,12 @@ class ListDark(ListImage):
                     linear_coefficient_log_log[y, x] = -1
         # mask = (1-linearity_error) < linear_coefficient_log_log < (1+linearity_error)
         return linear_coefficient_log_log
+
+    def bad_pixel_array(self):
+        return np.random.rand(*self.images[0].shape) > 0.95
+
+    def bad_pixel_image(self):
+        return ArrayImage(self.bad_pixel_array().astype(np.int16))
 
 
 def test(dark_dir, hdu=0):
