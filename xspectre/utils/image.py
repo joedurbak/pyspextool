@@ -20,10 +20,17 @@ class BaseImage:
     """
     BaseImage class creates an object with all of the general image manipulation techniques
     """
-    def __init__(self):
+    def __init__(self, bad_pixel_map=None):
         self.image = None
         self.image_hdu = 0
         self.header = fits.Header()
+        self.bad_pixel_map = bad_pixel_map
+
+    def generate_bad_pixel_map(self):
+        if self.bad_pixel_map is None:
+            self.bad_pixel_map = np.zeros(self.image.shape)
+        else:
+            self.bad_pixel_map = image_file_or_array_to_array(self.bad_pixel_map)
 
     def show(self):
         """
@@ -55,7 +62,7 @@ class BaseImage:
             hdu = self.image_hdu
         if not os.path.exists(file_dir):
             os.makedirs(file_dir)
-        # print(self.header)
+        print(self.header)
         # hdu_primary = fits.PrimaryHDU(header=self.header)
         hdu_primary = fits.PrimaryHDU()
         if hdu == 0:
@@ -109,20 +116,19 @@ class BaseImage:
                 plt.savefig(save_filepath)
         return histogram
 
-    def masked_interpolation(self, bad_pixel_mask, method='cubic'):
+    def masked_interpolation(self, method='cubic'):
         """
         Interpolates over masked locations
 
         Parameters
         ----------
-        bad_pixel_mask : np.array
         method : str
 
         Returns
         -------
 
         """
-        bad_pixel_mask = bad_pixel_mask > 0
+        bad_pixel_mask = self.bad_pixel_map > 0
         x = np.arange(0, self.image.shape[1])
         y = np.arange(0, self.image.shape[0])
         self.image[bad_pixel_mask] = np.nan
@@ -324,8 +330,8 @@ class BaseImage:
 
 
 class ExistingImage(BaseImage):
-    def __init__(self, filename: str, fits_image_hdu=settings_default['fits_image_hdu']):
-        super(ExistingImage, self).__init__()
+    def __init__(self, filename: str, bad_pixel_map=None, fits_image_hdu=settings_default['fits_image_hdu']):
+        super(ExistingImage, self).__init__(bad_pixel_map)
         self.image_hdu = fits_image_hdu
         self.filename = filename
         self.hdu_list = fits.open(filename)
@@ -333,23 +339,25 @@ class ExistingImage(BaseImage):
         if self.image is None:
             raise errors.EmptyImageError("Selected image HDU contains no array")
         self.header = self.hdu_list[0].header
+        self.generate_bad_pixel_map()
 
 
 class PNGImage(BaseImage):
-    def __init__(self, filename):
-        super(PNGImage, self).__init__()
+    def __init__(self, filename, bad_pixel_map=None):
+        super(PNGImage, self).__init__(bad_pixel_map=bad_pixel_map)
         self.image = np.mean(plt.imread(filename,), -1)
 
 
 class ArrayImage(BaseImage):
-    def __init__(self, array):
-        super(ArrayImage, self).__init__()
+    def __init__(self, array, bad_pixel_map=None):
+        super(ArrayImage, self).__init__(bad_pixel_map=bad_pixel_map)
         self.image = array
+        self.generate_bad_pixel_map()
 
 
 class ListImage(BaseImage):
-    def __init__(self, images):
-        super(ListImage, self).__init__()
+    def __init__(self, images, bad_pixel_map=None):
+        super(ListImage, self).__init__(bad_pixel_map=bad_pixel_map)
         self.images = np.asarray([image.image for image in images])
 
     def linearity_check(self):
@@ -357,9 +365,10 @@ class ListImage(BaseImage):
 
 
 class CombinedImage(ListImage):
-    def __init__(self, images):
-        super(CombinedImage, self).__init__(images)
+    def __init__(self, images, bad_pixel_map=None):
+        super(CombinedImage, self).__init__(images, bad_pixel_map=bad_pixel_map)
         self.image = np.mean(self.images, axis=0)
+        self.generate_bad_pixel_map()
 
 
 def image_overlay(background_image, foreground_image, background_cmap='Greys'):
@@ -387,3 +396,13 @@ def image_overlay(background_image, foreground_image, background_cmap='Greys'):
 def min_max_intensity_manipulate(image, minimum, maximum):
     image[image < minimum] = minimum
     image[image > maximum] = maximum
+
+
+def image_file_or_array_to_array(file_or_array):
+    if type(file_or_array) is str:
+        if file_or_array.endswith('.fits'):
+            return ExistingImage(file_or_array).image
+    elif type(file_or_array) is np.ndarray:
+        return file_or_array
+    else:
+        raise TypeError("{} isn't a fits file or a numpy array".format(file_or_array))

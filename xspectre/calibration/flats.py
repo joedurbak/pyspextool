@@ -2,10 +2,12 @@ import numpy as np
 from skimage import feature
 from skimage.segmentation import flood_fill
 
-from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
+from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage, ExistingImage
+from xspectre.test import hk_order_map_model
+
 
 class CombinedFlat(CombinedImage):
-    def __init__(self, flats, orders, scale_flats=False, sigma=5):
+    def __init__(self, flats, orders, bad_pixel_map=None, scale_flats=False, sigma=5):
         """
 
         Parameters
@@ -19,7 +21,7 @@ class CombinedFlat(CombinedImage):
         sigma : int or float
             deviation used in the edge finder
         """
-        super(CombinedFlat, self).__init__(flats)
+        super(CombinedFlat, self).__init__(flats, bad_pixel_map=bad_pixel_map)
         self.scaled_flats = [flat.scale_flat(scale_flats) for flat in flats]
         # self.array_and_scale = np.asarray(
         #     [np.asarray((flat.image, flat.flat_scale_multiplier)) for flat in self.scaled_flats])
@@ -99,3 +101,9 @@ class CombinedFlat(CombinedImage):
     #
     def generate_dead_pixel_mask(self, dead_pixel_value=65535):
         return self.image == dead_pixel_value
+
+    def order_map(self):
+        return ExistingImage(hk_order_map_model, fits_image_hdu=1).image
+
+    def order_map_image(self):
+        return ArrayImage(self.order_map())
