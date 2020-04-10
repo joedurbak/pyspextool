@@ -2,7 +2,8 @@ import numpy as np
 from skimage import feature
 from skimage.segmentation import flood_fill
 
-from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage
+from xspectre.utils.image import image_overlay, CombinedImage, ArrayImage, ExistingImage
+from xspectre.test import hk_order_map_model
 
 
 class CombinedFlat(CombinedImage):
@@ -100,3 +101,9 @@ class CombinedFlat(CombinedImage):
     #
     def generate_dead_pixel_mask(self, dead_pixel_value=65535):
         return self.image == dead_pixel_value
+
+    def order_map(self):
+        return ExistingImage(hk_order_map_model, 1).image
+
+    def order_map_image(self):
+        return ArrayImage(self.order_map())

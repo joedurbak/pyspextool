@@ -14,6 +14,7 @@ bad_pixel_flats = list_flat.bad_pixel_array()
 bad_pixel_flats_image = list_flat.bad_pixel_image()
 bad_pixel_flats_image.save(os.path.join(characterization_output_dir, 'bad_pixel_flat_map.fits'), hdu=0)
 
+# TODO: add dark test data
 darks = [Dark(d) for d in hk_flats_input]
 list_dark = ListDark(darks)
 bad_pixel_darks = list_dark.bad_pixel_array()

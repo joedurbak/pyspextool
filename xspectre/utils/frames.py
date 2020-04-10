@@ -28,6 +28,6 @@ class Flat(ExistingImage):
 
 
 class Arc(ExistingImage):
-    def __init__(self, filename):
-        super(Arc, self).__init__(filename)
+    def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
+        super(Arc, self).__init__(filename, fits_image_hdu)
 

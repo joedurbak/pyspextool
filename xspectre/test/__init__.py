@@ -37,3 +37,9 @@ yj_arcs_input = {}
 
 for key, value in yj_arcs.items():
     yj_arcs_input[key] = os.path.join(test_file_dir, value)
+
+model_dir = os.path.join(test_file_dir, 'models')
+hk_wave_map_model = os.path.join(model_dir, 'HK_wavmap.fits')
+hk_order_map_model = os.path.join(model_dir, 'HK_order_map.fits')
+yj_wave_map_model = os.path.join(model_dir, 'YJ_wavmap.fits')
+yj_order_map_model = os.path.join(model_dir, 'YJ_order_map.fits')
