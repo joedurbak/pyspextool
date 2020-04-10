@@ -9,7 +9,9 @@ from xspectre.utils.frames import Dark
 class ListDark(ListImage):
     def __init__(self, darks):
         """
-        Does all of the order locating and background removal for flats
+        Characterizes detector based on dark frames
+
+        Main output for this class is given by the bad_pixel_image function
 
         Parameters
         ----------

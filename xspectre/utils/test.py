@@ -5,7 +5,7 @@ from xspectre.utils.image import ExistingImage  # , image_overlay, ArrayImage
 
 if __name__ == '__main__':
     # create image object
-    test_image = ExistingImage(test.yj_flats_input[0], 0)
+    test_image = ExistingImage(test.yj_flats_input[0], None, 0)
     # test_image.show()
 
     # resizing, translating image

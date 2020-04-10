@@ -5,16 +5,16 @@ from xspectre.settings.settings import settings_default
 
 
 class Dark(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
-        super(Dark, self).__init__(filename, fits_image_hdu)
+    def __init__(self, filename, bad_pixel_map=None, fits_image_hdu=settings_default['fits_image_hdu']):
+        super(Dark, self).__init__(filename, bad_pixel_map=bad_pixel_map, fits_image_hdu=fits_image_hdu)
 
     def generate_hot_pixel_mask(self, cutoff_percentile=90):
         return self.image > np.percentile(self.image, cutoff_percentile)
 
 
 class Flat(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
-        super(Flat, self).__init__(filename=filename, fits_image_hdu=fits_image_hdu)
+    def __init__(self, filename, bad_pixel_map=None, fits_image_hdu=settings_default['fits_image_hdu']):
+        super(Flat, self).__init__(filename=filename, bad_pixel_map=bad_pixel_map, fits_image_hdu=fits_image_hdu)
         self.flat_scale_multiplier = 1
 
     def scale_flat(self, scale_activated=False):
@@ -28,6 +28,5 @@ class Flat(ExistingImage):
 
 
 class Arc(ExistingImage):
-    def __init__(self, filename, fits_image_hdu=settings_default['fits_image_hdu']):
-        super(Arc, self).__init__(filename, fits_image_hdu)
-
+    def __init__(self, filename, bad_pixel_map=None, fits_image_hdu=settings_default['fits_image_hdu']):
+        super(Arc, self).__init__(filename, bad_pixel_map=bad_pixel_map, fits_image_hdu=fits_image_hdu)

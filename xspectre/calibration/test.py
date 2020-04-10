@@ -19,7 +19,7 @@ class FlatTest:
         # self.fcomb.power_pixel_scale()
 
     def test_combination(self):
-        return CombinedFlat(self.flats, True).image
+        return CombinedFlat(self.flats, ORDERS, scale_flats=True).image
 
     def test_canny(self):
         # return Spline(self.test_spline()).canny()
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     order_map_image.save(os.path.join(test.calibration_output_dir, 'order_map.fits'), 0)
 
     # test wavelength map output
-    arcs = [Arc(a, 0) for a in test.hk_arcs_input.values()]
+    arcs = [Arc(a, fits_image_hdu=0) for a in test.hk_arcs_input.values()]
     combined_arc = CombinedArc(arcs, order_map)
     wavelength_map = combined_arc.wavelength_map()
     wavelength_map_image = combined_arc.wavelength_map_image()
