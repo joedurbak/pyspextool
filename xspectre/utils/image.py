@@ -63,8 +63,8 @@ class BaseImage:
         if not os.path.exists(file_dir):
             os.makedirs(file_dir)
         print(self.header)
-        # hdu_primary = fits.PrimaryHDU(header=self.header)
-        hdu_primary = fits.PrimaryHDU()
+        hdu_primary = fits.PrimaryHDU(header=self.header)
+        # hdu_primary = fits.PrimaryHDU()
         if hdu == 0:
             hdu_primary.data = self.image
             hdu_list = fits.HDUList([hdu_primary])
@@ -340,6 +340,7 @@ class ExistingImage(BaseImage):
             raise errors.EmptyImageError("Selected image HDU contains no array")
         self.header = self.hdu_list[0].header
         self.generate_bad_pixel_map()
+        self.hdu_list.close()
 
 
 class PNGImage(BaseImage):
